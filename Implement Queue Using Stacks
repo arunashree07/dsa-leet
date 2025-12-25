@@ -1,0 +1,43 @@
+typedef struct {
+    int s1[100];
+    int s2[100];
+    int top1;
+    int top2;
+} MyQueue;
+bool myQueueEmpty(MyQueue* obj);
+int myQueuePop(MyQueue* obj);
+
+MyQueue* myQueueCreate() {
+   MyQueue* queue = (MyQueue*)malloc(sizeof(MyQueue));
+   queue->top1 = -1;
+    queue->top2 = -1;
+   return queue;
+}
+
+void myQueuePush(MyQueue* obj, int x) {
+while (obj->top2 != -1) {
+        obj->s1[++obj->top1] = obj->s2[obj->top2--];
+    }
+    obj->s1[++obj->top1] = x;
+    while (obj->top1 != -1) {
+        obj->s2[++obj->top2] = obj->s1[obj->top1--];
+    }
+}
+
+int myQueuePop(MyQueue* obj) {
+    return obj->s2[obj->top2--];
+
+}
+
+int myQueuePeek(MyQueue* obj) {
+    return obj->s2[obj->top2];
+}
+
+bool myQueueEmpty(MyQueue* obj) {
+    return obj->top2 == -1;
+}
+
+void myQueueFree(MyQueue* obj) {
+       free(obj);
+}
+
